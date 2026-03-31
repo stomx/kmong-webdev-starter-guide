@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서비스형 페이지 템플릿</title>
+  <link rel="stylesheet" href="./template-common.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="section">
+      <span class="badge">Template C · Service Page</span>
+      <h1>기능 중심 서비스 소개 페이지</h1>
+      <p>상품/서비스의 핵심 기능, 가격, 이용 가이드를 블록으로 구성해 신뢰를 높입니다.</p>
+      <a href="#packages" class="btn">패키지 확인</a>
+    </div>
+  </header>
+
+  <section class="section" id="packages">
+    <h2 class="section-title">패키지 안내</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>BASIC</h3>
+        <p>1~3개 섹션, 기본 반응형, 월 1회 수정</p>
+      </article>
+      <article class="card">
+        <h3>STANDARD</h3>
+        <p>5~8개 섹션, 폼/지도 연동, 월 2회 수정</p>
+      </article>
+      <article class="card">
+        <h3>PREMIUM</h3>
+        <p>관리자 연동/추가 기능 포함, 월간 점검 가이드</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">FAQ</h2>
+    <div class="card">
+      <p><strong>납기</strong>: 기본 7~10일</p>
+      <p><strong>도메인/호스팅</strong>: 필요시 별도 연동 가이드 제공</p>
+      <p><strong>유지보수</strong>: 기본 1~3회 + 필요시 추가 계약</p>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <h2 class="section-title">상담 신청</h2>
+    <form>
+      <label for="msg">요청사항</label>
+      <textarea id="msg" rows="5" placeholder="예산/일정/기능을 적어주세요"></textarea>
+      <button class="btn" type="button">상담 예약</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="section">© Template C | 서비스형 페이지</div>
+  </footer>
+</body>
+</html>

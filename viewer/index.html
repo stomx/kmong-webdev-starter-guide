@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>크몽 웹개발 스타터 - 원격 뷰어</title>
+  <style>
+    :root { --bg: #0f172a; --card: #ffffff; --line: #e2e8f0; --text: #0f172a; }
+    *{box-sizing: border-box;}
+    body{margin:0; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Arial, sans-serif; background:#f8fafc; color:var(--text);}
+    .wrap{max-width: 980px; margin: 0 auto; padding: 24px 16px 40px;}
+    h1{font-size: 1.6rem; margin: 0 0 6px;}
+    .desc{color:#334155; margin-bottom: 18px;}
+    .grid{display:grid; grid-template-columns:1fr; gap:14px;}
+    @media (min-width: 820px){ .grid{grid-template-columns: 1fr 1fr;} }
+    .card{background:#fff; border:1px solid var(--line); border-radius: 12px; padding: 14px 16px;}
+    .card h2{margin: 0 0 8px; font-size: 1.05rem;}
+    a{color:#2563eb; text-decoration:none; word-break: break-all;}
+    ul{margin: 8px 0 0 18px; padding: 0;}
+    li{margin: 6px 0;}
+    code{background:#e2e8f0; padding:1px 6px; border-radius:6px;}
+    .banner{background:#eef2ff; border:1px solid #c7d2fe; padding:12px; border-radius:10px; margin-bottom: 18px;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>크몽 웹개발 스타터 - 원격 확인 뷰어</h1>
+    <div class="banner">
+      이 뷰어는 원격지에서 파일을 직접 찾아보기 어렵더라도, 브라우저에서 한 번에 정리본을 확인할 수 있게 만든 페이지입니다.
+      <br/>아래 파일 링크를 클릭해 열어 보세요.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>핵심 실행 파일</h2>
+        <ul>
+          <li><a href="../docs/00_한눈에_보기_요약본.md">00_한눈에_보기_요약본.md</a></li>
+          <li><a href="../docs/06_크몽_최종_붙여넣기_패키지.md">06_크몽_최종_붙여넣기_패키지.md</a></li>
+          <li><a href="../docs/07_홍보_운영_완성본.md">07_홍보_운영_완성본.md</a></li>
+          <li><a href="../README.md">README.md</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>템플릿 미리보기</h2>
+        <ul>
+          <li><a href="../templates/index.html">템플릿 index</a></li>
+          <li><a href="../templates/template-a-landing.html">template-a-landing.html</a></li>
+          <li><a href="../templates/template-b-business.html">template-b-business.html</a></li>
+          <li><a href="../templates/template-c-service-page.html">template-c-service-page.html</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>체크리스트 / 폼</h2>
+        <ul>
+          <li><a href="../checklist/업로드_전_체크리스트.md">업로드_전_체크리스트.md</a></li>
+          <li><a href="../checklist/의뢰인_요구사항_폼.md">의뢰인_요구사항_폼.md</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>보조 자료</h2>
+        <ul>
+          <li><a href="../sample_data/샘플_카피_문구.md">샘플_카피_문구.md</a></li>
+          <li><a href="../docs/01_전체_사업_설계.md">01_전체_사업_설계.md</a></li>
+          <li><a href="../docs/02_서비스_상품_설계.md">02_서비스_상품_설계.md</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h2>원격 접속용 실행 방법</h2>
+      <p>터미널에서 아래 명령 실행:</p>
+      <p><code>cd /Users/jaymon/.openclaw/workspace/Kmong-WebDev-Starter && python3 -m http.server 7860</code></p>
+      <p>다른 기기에서 접속:</p>
+      <p><code>http://&lt;이 PC의 IP&gt;:7860/viewer/</code></p>
+      <p>예시(같은 PC): <code>http://127.0.0.1:7860/viewer/</code></p>
+    </div>
+
+    <div class="desc">
+      비고: 브라우저에서 마크다운 확장자(.md)는 텍스트로 보이거나 렌더링되지 않을 수 있습니다. 필요하면 제가 바로 Markdown 렌더러 버전으로도 만들어드리겠습니다.
+    </div>
+  </div>
+</body>
+</html>
