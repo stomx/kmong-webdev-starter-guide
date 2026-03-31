@@ -7,267 +7,691 @@
   <style>
     :root {
       --bg: #0f172a;
-      --panel: #ffffff;
+      --surface: #ffffff;
       --line: #e2e8f0;
-      --muted: #334155;
       --text: #0f172a;
-      --brand: #4f46e5;
-      --brand-2: #1d4ed8;
+      --muted: #334155;
+      --muted-2: #64748b;
+      --primary: #1e3a8a;
+      --primary-2: #2563eb;
+      --focus: #2563eb;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      --shadow: 0 8px 24px rgba(15,23,42,.08);
+      --radius: 12px;
     }
+
     * { box-sizing: border-box; }
     body {
       margin: 0;
       background: #f8fafc;
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', Arial, sans-serif;
     }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 8px;
+      z-index: 100;
+      background: #fff;
+      color: #0f172a;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+    }
+    .skip:focus {
+      left: 16px;
+    }
+
     .top {
       background: linear-gradient(130deg, #0f172a, #1d4ed8);
       color: #fff;
-      padding: 36px 16px;
+      padding: 30px 16px;
     }
-    .wrap { max-width: 1100px; margin: 0 auto; }
-    h1 { margin: 0; font-size: clamp(1.6rem, 4vw, 2.2rem); }
-    .subtitle { margin: 8px 0 12px; color: #dbeafe; }
-    .tabs {
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2rem); }
+    .subtitle {
+      margin: 8px 0 14px;
+      color: #dbeafe;
+      max-width: 900px;
+    }
+    .toolbar-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.28);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: .9rem;
+      color: #f0f9ff;
+    }
+
+    .tabbar {
+      margin-top: 14px;
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-top: 14px;
     }
-    .tab {
-      background: rgba(255,255,255,.13);
-      color: #fff;
+    .tabbar button {
       border: 1px solid rgba(255,255,255,.3);
+      background: rgba(255,255,255,.11);
+      color: #fff;
       border-radius: 999px;
       padding: 8px 12px;
-      text-decoration: none;
-      font-size: 0.95rem;
+      font-size: .94rem;
+      cursor: pointer;
+      font-weight: 700;
     }
-    .tab.active { background: #fff; color: #0f172a; border-color: #fff; }
+    .tabbar button[aria-selected="true"] {
+      background: #fff;
+      color: #0f172a;
+      border-color: #fff;
+    }
+    .tabbar button:focus-visible,
+    .doc-item:focus-visible,
+    .action-btn:focus-visible,
+    #search:focus-visible,
+    #doc-select:focus-visible,
+    #copy-btn:focus-visible,
+    #retry-btn:focus-visible {
+      outline: 3px solid #facc15;
+      outline-offset: 2px;
+    }
 
-    .section { padding: 18px 16px 30px; }
-    .panel-grid {
+    .main {
+      padding: 18px 16px 32px;
+    }
+
+    .workspace {
+      max-width: 1180px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 340px 1fr;
       gap: 14px;
     }
-    @media (min-width: 900px) {
-      .panel-grid { grid-template-columns: 1.2fr .8fr; }
-    }
 
-    .card {
-      background: var(--panel);
+    .panel {
+      background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 14px;
-      box-shadow: 0 6px 18px rgba(15,23,42,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: 420px;
     }
-    .card h2 { margin: 0 0 10px; font-size: 1.1rem; }
-    .card p { margin: 0 0 10px; color: var(--muted); }
 
-    .quick {
-      list-style: decimal;
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      gap: 10px;
+    }
+
+    .sidebar h2 {
       margin: 0;
-      padding-left: 18px;
+      font-size: 1.02rem;
+    }
+    .small { font-size: .9rem; color: var(--muted); }
+
+    .search-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    #search {
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: .95rem;
+    }
+    #search-clear {
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #fff;
+      color: #334155;
+      padding: 8px 10px;
+    }
+
+    .group {
+      margin-top: 4px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+      background: #f8fafc;
+    }
+    .group h3 {
+      margin: 0 0 8px;
+      font-size: .95rem;
       color: #334155;
     }
-    .quick li { margin: 8px 0; }
-
-    .doc-list { margin: 0; padding-left: 18px; }
-    .doc-list a { color: #2563eb; }
+    .doc-item {
+      width: 100%;
+      text-align: left;
+      border: 1px solid #dbeafe;
+      background: #fff;
+      margin-top: 6px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #1e3a8a;
+      font-size: .92rem;
+    }
+    .doc-item[aria-current="true"] {
+      background: #dbeafe;
+      border-color: #93c5fd;
+      font-weight: 700;
+    }
 
     .viewer {
-      margin-top: 14px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 520px;
     }
     .viewer-head {
-      background: #f1f5f9;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #f8fafc;
       border-bottom: 1px solid var(--line);
       padding: 10px 12px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
-    .viewer-head select {
-      padding: 8px;
-      border-radius: 8px;
+    .viewer-head .left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+    .status {
+      font-size: .84rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f1f5f9;
       border: 1px solid #cbd5e1;
-      font-size: 0.95rem;
+      color: #334155;
+      white-space: nowrap;
     }
-    .viewer pre {
-      margin: 0;
-      max-height: 560px;
-      overflow: auto;
-      padding: 14px;
-      line-height: 1.6;
+    .status.loading { background: #dbeafe; color: #1d4ed8; }
+    .status.error { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+    .status.success { background: #dcfce7; color: #14532d; border-color: #86efac; }
+    #current-path { color: #64748b; font-size: .84rem; }
+
+    #doc-select {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 6px 8px;
+      max-width: 100%;
+    }
+
+    .actions { display: flex; gap: 8px; }
+    .action-btn {
+      border: 1px solid #cbd5e1;
       background: #fff;
-      font-size: 0.95rem;
+      border-radius: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+    .action-btn.primary { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+
+    #docViewer {
+      margin: 0;
       white-space: pre-wrap;
       word-break: break-all;
-    }
-    .pill {
-      background: #e0e7ff;
-      color: #3730a3;
-      border: 1px solid #c7d2fe;
-      border-radius: 999px;
-      padding: 3px 10px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    a {
-      text-decoration: none;
-      color: #2563eb;
-    }
-    a:hover { text-decoration: underline; }
-    .small { color: #64748b; font-size: 0.92rem; }
-
-    .call {
-      background: #ecfeff;
-      border: 1px solid #a5f3fc;
-      color: #0e7490;
-      border-radius: 12px;
+      background: #fff;
+      color: #0f172a;
+      line-height: 1.6;
       padding: 12px;
-      margin-bottom: 14px;
+      overflow: auto;
+      font-size: .95rem;
+      min-height: 380px;
+      max-height: calc(100vh - 220px);
+      min-height: 420px;
+    }
+
+    mark {
+      background: #fef9c3;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+
+    .note {
+      border-top: 1px solid var(--line);
+      padding: 10px 12px;
+      background: #ecfeff;
+      color: #0e7490;
+      font-size: .92rem;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    .reveal {
+      display: none;
+    }
+
+    @media (max-width: 960px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        order: 2;
+      }
+      .viewer {
+        order: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .toolbar { gap: 10px; }
+      .viewer-head {
+        position: static;
+        padding: 10px;
+      }
+      .actions { width: 100%; }
+      .action-btn { flex: 1; }
+      #docViewer {
+        max-height: calc(100vh - 340px);
+      }
+      .reveal {
+        display: inline;
+        margin-left: 8px;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="top">
+  <a class="skip" href="#viewer-head">본문 바로가기</a>
+
+  <header class="top" role="banner">
     <div class="wrap">
       <h1>크몽 웹개발 스타터 원격 뷰어</h1>
-      <div class="subtitle">원격지에서도 바로 확인할 수 있는 전문형 배포판 뷰어</div>
-      <div class="tabs">
-        <a class="tab active" href="#" data-target="core">핵심 문안</a>
-        <a class="tab" href="#" data-target="ops">운영 체크</a>
-        <a class="tab" href="#" data-target="templates">템플릿</a>
-        <a class="tab" href="#" data-target="raw">원본 파일</a>
+      <p class="subtitle">문안·체크리스트·템플릿을 빠르게 불러와 검토할 수 있는 작업형 인터페이스</p>
+      <div class="toolbar-note">원격지 확인용: 읽기만 되는 뷰가 아니라 즉시 복붙/검색까지 지원합니다.</div>
+      <div class="tabbar" role="tablist" aria-label="문서 시나리오">
+        <button class="tab" role="tab" id="tab-core" data-target="core" aria-controls="viewer-area" aria-selected="true" aria-label="즉시업로드 시나리오">즉시업로드</button>
+        <button class="tab" role="tab" id="tab-ops" data-target="ops" aria-controls="viewer-area" aria-selected="false" aria-label="운영관리 시나리오">운영관리</button>
+        <button class="tab" role="tab" id="tab-template" data-target="template" aria-controls="viewer-area" aria-selected="false" aria-label="템플릿 시나리오">템플릿</button>
+        <button class="tab" role="tab" id="tab-check" data-target="check" aria-controls="viewer-area" aria-selected="false" aria-label="체크리스트 시나리오">체크리스트</button>
       </div>
     </div>
   </header>
 
-  <main class="section">
-    <div class="wrap panel-grid">
-      <section class="card" id="section-core">
-        <h2>프로젝트 개요</h2>
-        <p>문서 구조는 그대로 두되, 각 핵심 텍스트를 빠르게 확인·복붙할 수 있게 정리했습니다.</p>
-
-        <ul class="quick">
-          <li><strong>docs/06_크몽_최종_붙여넣기_패키지.md</strong> : 프로필/상품/FAQ/응답 템플릿</li>
-          <li><strong>docs/07_홍보_운영_완성본.md</strong> : 제목/썸네일/응답 운영안</li>
-          <li><strong>docs/05_크몽_즉시업로드_문안_세트.md</strong> : 초기 업로드용 베이스 텍스트</li>
-          <li><strong>checklist/업로드_전_체크리스트.md</strong> : 업로드 직전 점검</li>
-        </ul>
-
-        <div class="call" style="margin-top: 12px;">
-          포인트: 크몽 페이지는 텍스트 품질보다 <strong>명확한 포함/제외 항목</strong>과 <strong>첫 응답 속도</strong>가 전환률을 좌우합니다.
+  <main class="main">
+    <div class="wrap workspace">
+      <aside class="panel sidebar" aria-label="문서 목록 패널">
+        <h2>문서 선택</h2>
+        <p class="small">카테고리/검색으로 원하는 문서를 빠르게 찾으세요.</p>
+        <div class="search-wrap">
+          <input id="search" aria-label="문서 검색" type="search" placeholder="문서명 검색" />
+          <button id="search-clear" type="button" class="action-btn" aria-label="검색 초기화">초기화</button>
         </div>
-      </section>
 
-      <section class="card" id="section-ops">
-        <h2>원격지 실행 가이드</h2>
-        <p>로컬에서 바로 확인하려면:</p>
-        <p class="small">cd /Users/jaymon/.openclaw/workspace/Kmong-WebDev-Starter && bash run_preview.sh</p>
-        <ul class="doc-list">
-          <li><a href="../run_preview.sh">run_preview.sh</a> (로컬 실행 스크립트)</li>
-          <li><a href="../docs/08_원격_확인_가이드.md">docs/08_원격_확인_가이드.md</a></li>
-          <li><a href="../templates/index.html">템플릿 인덱스</a></li>
-        </ul>
+        <div class="group" id="group-core">
+          <h3>핵심 문안</h3>
+        </div>
+        <div class="group" id="group-ops">
+          <h3>운영</h3>
+        </div>
+        <div class="group" id="group-template">
+          <h3>템플릿</h3>
+        </div>
+        <div class="group" id="group-check">
+          <h3>체크리스트</h3>
+        </div>
+      </aside>
 
-        <h2 style="margin-top: 14px;">현재 뷰어 기능</h2>
-        <ul class="quick">
-          <li>선택한 파일 즉시 텍스트 로드</li>
-          <li>복사하기 버튼</li>
-          <li>모바일에서 터치 가능한 카드형 인터페이스</li>
-        </ul>
+      <section class="panel viewer" id="viewer-area" role="region" aria-labelledby="viewer-title">
+        <div class="viewer-head" id="viewer-head">
+          <div class="left">
+            <span id="status" class="status" role="status" aria-live="polite">준비됨</span>
+            <span id="current-path">문서 경로</span>
+          </div>
+          <div class="actions">
+            <select id="doc-select" aria-label="문서 직접 선택"></select>
+            <button id="copy-btn" class="action-btn primary" type="button" aria-label="문서 내용 복사">복사</button>
+            <button id="retry-btn" class="action-btn" type="button" style="display:none;" aria-label="다시 불러오기">다시 불러오기</button>
+          </div>
+        </div>
+        <pre id="docViewer" aria-live="polite" aria-busy="false"></pre>
+        <div class="note">표시되는 문서는 실제 파일 텍스트입니다. 렌더링 미리보기(헤딩/리스트 정렬)는 다음 단계로 확장 가능합니다.</div>
       </section>
     </div>
-
-    <section class="card viewer section-view" style="margin-top:14px;">
-      <div class="viewer-head">
-        <div>
-          <span class="pill">문서 미리보기</span>
-          <span class="small" id="currentPath" style="margin-left:8px;"></span>
-        </div>
-        <select id="docSelect" aria-label="문서 선택">
-          <option value="../docs/06_크몽_최종_붙여넣기_패키지.md">06_크몽_최종_붙여넣기_패키지</option>
-          <option value="../docs/07_홍보_운영_완성본.md">07_홍보_운영_완성본</option>
-          <option value="../docs/05_크몽_즉시업로드_문안_세트.md">05_크몽_즉시업로드_문안_세트</option>
-          <option value="../docs/00_한눈에_보기_요약본.md">00_한눈에_보기_요약본</option>
-          <option value="../checklist/업로드_전_체크리스트.md">업로드_전_체크리스트</option>
-          <option value="../checklist/의뢰인_요구사항_폼.md">의뢰인_요구사항_폼</option>
-        </select>
-      </div>
-      <pre id="docViewer">문서를 로드 중입니다...</pre>
-    </section>
-
-    <section class="card" style="margin-top: 14px;" id="section-templates">
-      <h2>템플릿 빠른 링크</h2>
-      <div class="small">브라우저에서 각 템플릿을 열고, 로고/색/카피를 교체해 사용하세요.</div>
-      <ul class="doc-list" style="margin-top:12px;">
-        <li><a href="../templates/template-a-landing.html">template-a-landing (랜딩)</a></li>
-        <li><a href="../templates/template-b-business.html">template-b-business (기업소개)</a></li>
-        <li><a href="../templates/template-c-service-page.html">template-c-service-page (서비스형)</a></li>
-        <li><a href="../templates/template-common.css">template-common.css</a></li>
-      </ul>
-    </section>
-
-    <section class="call" style="margin-top: 14px;">
-      필요하면 이 뷰어에 <strong>실제 마크다운 렌더링</strong> 모드까지 붙여, 제목/목록을 폰트 스타일로 보여주도록 다음 단계에서 확장 가능합니다.
-    </section>
   </main>
 
   <script>
-    const viewer = document.getElementById('docViewer');
-    const select = document.getElementById('docSelect');
-    const currentPath = document.getElementById('currentPath');
+    const DOCS = [
+      { id: 'd06', title: '06_크몽_최종_붙여넣기_패키지.md', path: '../docs/06_크몽_최종_붙여넣기_패키지.md', category: 'core', desc: '프로필/상품/FAQ/응답 문안' },
+      { id: 'd07', title: '07_홍보_운영_완성본.md', path: '../docs/07_홍보_운영_완성본.md', category: 'core', desc: '썸네일/상품명/응대 운영안' },
+      { id: 'd05', title: '05_크몽_즉시업로드_문안_세트.md', path: '../docs/05_크몽_즉시업로드_문안_세트.md', category: 'core', desc: '초기 업로드용 기본 문안' },
+      { id: 'd00', title: '00_한눈에_보기_요약본.md', path: '../docs/00_한눈에_보기_요약본.md', category: 'ops', desc: '요약 핵심 오버뷰' },
+      { id: 'd09', title: 'docs/08_원격_확인_가이드.md', path: '../docs/08_원격_확인_가이드.md', category: 'ops', desc: '원격지 확인 방법' },
+      { id: 'dcheck', title: '업로드_전_체크리스트.md', path: '../checklist/업로드_전_체크리스트.md', category: 'check', desc: '업로드 직전 누락 점검' },
+      { id: 'dform', title: '의뢰인_요구사항_폼.md', path: '../checklist/의뢰인_요구사항_폼.md', category: 'check', desc: '요구사항 수집용 체크폼' },
+      { id: 'dtmpl', title: '템플릿 인덱스', path: '../templates/index.html', category: 'template', desc: '템플릿 미리보기' },
+      { id: 'dtmplA', title: 'template-a-landing.html', path: '../templates/template-a-landing.html', category: 'template', desc: '랜딩형 샘플' },
+      { id: 'dtmplB', title: 'template-b-business.html', path: '../templates/template-b-business.html', category: 'template', desc: '비즈니스형 샘플' },
+      { id: 'dtmplC', title: 'template-c-service-page.html', path: '../templates/template-c-service-page.html', category: 'template', desc: '서비스형 샘플' }
+    ];
 
-    async function loadDoc(path) {
-      try {
-        const res = await fetch(path);
-        if (!res.ok) throw new Error('로드 실패');
-        const txt = await res.text();
-        viewer.textContent = txt;
-        currentPath.textContent = path;
-      } catch (e) {
-        viewer.textContent = '문서 로드 실패: ' + e.message + '\n경로: ' + path;
+    const TAB_MAP = {
+      core: ['d06', 'd07', 'd05'],
+      ops: ['d00', 'd09'],
+      template: ['dtmpl', 'dtmplA', 'dtmplB', 'dtmplC'],
+      check: ['dcheck', 'dform']
+    };
+
+    const tabs = document.querySelectorAll('.tabbar button');
+    const viewer = document.getElementById('docViewer');
+    const status = document.getElementById('status');
+    const currentPath = document.getElementById('current-path');
+    const docSelect = document.getElementById('doc-select');
+    const searchInput = document.getElementById('search');
+    const searchClear = document.getElementById('search-clear');
+    const copyBtn = document.getElementById('copy-btn');
+    const retryBtn = document.getElementById('retry-btn');
+
+    const cache = new Map();
+    let state = {
+      activeTab: 'core',
+      activeDoc: DOCS[0].path,
+      loading: false
+    };
+
+    function groupByCategory(category) {
+      return DOCS.filter((d) => d.category === category);
+    }
+
+    function sanitizeText(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function renderSelect(docs = DOCS) {
+      const prev = docSelect.value;
+      docSelect.innerHTML = '';
+      docs.forEach((doc) => {
+        const opt = document.createElement('option');
+        opt.value = doc.path;
+        opt.textContent = `${doc.title} · ${doc.desc}`;
+        opt.dataset.id = doc.id;
+        docSelect.appendChild(opt);
+      });
+      if (docs.some((d) => d.path === prev)) {
+        docSelect.value = prev;
+      } else {
+        const fallback = docs.find((d) => d.id === state.activeDoc);
       }
     }
 
-    select.addEventListener('change', (e) => {
-      loadDoc(e.target.value);
-    });
+    function renderSidebar(docs = DOCS) {
+      const groups = {
+        core: document.getElementById('group-core'),
+        ops: document.getElementById('group-ops'),
+        template: document.getElementById('group-template'),
+        check: document.getElementById('group-check')
+      };
 
-    // 초기 로드
-    loadDoc(select.value);
+      Object.keys(groups).forEach((k) => {
+        groups[k].querySelectorAll('.doc-item').forEach((n) => n.remove());
+      });
 
-    // 네비게이션 탭 동작
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-        tab.classList.add('active');
-        const target = tab.dataset.target;
-        const map = {
-          core: ['06_크몽_최종_붙여넣기_패키지.md', '07_홍보_운영_완성본.md'],
-          ops: ['업로드_전_체크리스트.md', 'docs/00_한눈에_보기_요약본.md'],
-          templates: ['template-a-landing.html', 'template-b-business.html', 'template-c-service-page.html']
-        };
-        const options = Array.from(select.options);
-        const next = map[target] ? options.find(opt => map[target].some(k => opt.value.includes(k))) : options[0];
-        if (next) {
-          select.value = next.value;
-          loadDoc(next.value);
-          document.getElementById('section-core').scrollIntoView({behavior:'smooth', block:'start'});
+      docs.forEach((doc) => {
+        const btn = document.createElement('button');
+        btn.className = 'doc-item';
+        btn.type = 'button';
+        btn.textContent = doc.title;
+        btn.dataset.path = doc.path;
+        btn.dataset.id = doc.id;
+        btn.setAttribute('aria-current', doc.path === state.activeDoc ? 'true' : 'false');
+        if (state.activeDoc === doc.path) {
+          btn.focus();
+        }
+        btn.addEventListener('click', () => {
+          loadDocument(doc.path);
+          docSelect.value = doc.path;
+          syncUrl();
+          renderSidebar();
+        });
+        btn.title = doc.desc;
+        groups[doc.category]?.appendChild(btn);
+      });
+    }
+
+    function setStatus(type, text) {
+      status.className = 'status ' + type;
+      status.textContent = text;
+    }
+
+    function showRetry(show) {
+      retryBtn.style.display = show ? 'inline-block' : 'none';
+    }
+
+    function updateCurrentPath(path) {
+      currentPath.textContent = path.replace('../', '');
+    }
+
+    function filterDocs(keyword) {
+      const q = keyword.trim().toLowerCase();
+      if (!q) return DOCS;
+      return DOCS.filter((doc) =>
+        doc.title.toLowerCase().includes(q) || doc.desc.toLowerCase().includes(q)
+      );
+    }
+
+    async function loadDocument(path, focusAfterLoad = true) {
+      if (!DOCS.some((d) => d.path === path)) {
+        setStatus('error', '허용되지 않은 경로입니다.');
+        showRetry(false);
+        return;
+      }
+
+      state.activeDoc = path;
+      setStatus('loading', '문서 로드 중…');
+      viewer.setAttribute('aria-busy', 'true');
+      viewer.textContent = '로딩 중...';
+      showRetry(false);
+
+      try {
+        const cached = cache.get(path);
+        const text = cached
+          ? cached
+          : await (async () => {
+              const res = await fetch(path, { cache: 'no-store' });
+              if (!res.ok) throw new Error('HTTP ' + res.status);
+              const t = await res.text();
+              cache.set(path, t);
+              return t;
+            })();
+
+        const selected = path;
+        const safe = sanitizeText(text);
+        cache.set(path, cache.get(path) || text);
+        viewer.innerHTML = applyLineNumbers(safe);
+        updateCurrentPath(path);
+        setStatus('success', '로드 완료');
+        viewer.setAttribute('aria-busy', 'false');
+        if (focusAfterLoad) {
+          viewer.focus && viewer.focus();
+        }
+      } catch (e) {
+        setStatus('error', '문서 로드 실패');
+        viewer.setAttribute('aria-busy', 'false');
+        viewer.textContent = `문서 로드 실패: ${e.message}\n경로: ${path}`;
+        showRetry(true);
+      }
+
+      if (searchInput.value.trim()) {
+        applySearch(searchInput.value);
+      }
+
+      updateCurrentSelectionState();
+    }
+
+    function applyLineNumbers(text) {
+      const lines = text.split('\n').map((line, idx) => `${(idx + 1).toString().padStart(3, '0')}  ${line}`);
+      return lines.join('\n');
+    }
+
+    function updateCurrentSelectionState() {
+      document.querySelectorAll('.doc-item').forEach((btn) => {
+        btn.setAttribute('aria-current', btn.dataset.path === state.activeDoc ? 'true' : 'false');
+      });
+      const active = DOCS.find((d) => d.path === state.activeDoc);
+      if (active) {
+        setStateFromUrl({ doc: active.path, tab: state.activeTab }, true);
+      }
+    }
+
+    function setStateFromUrl({doc, tab}, updateSelect = false) {
+      const params = new URLSearchParams(window.location.search);
+      if (doc) params.set('doc', doc);
+      if (tab) params.set('tab', tab);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+      if (updateSelect) {
+        docSelect.value = doc;
+      }
+    }
+
+    function syncUrl() {
+      setStateFromUrl({ doc: state.activeDoc, tab: state.activeTab }, true);
+    }
+
+    function applyTab(tabId) {
+      state.activeTab = tabId;
+      tabs.forEach((t) => {
+        const active = t.dataset.target === tabId;
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      const ids = TAB_MAP[tabId] || DOCS.map((d) => d.id);
+      const filtered = DOCS.filter((d) => ids.includes(d.id));
+      renderSelect(filtered);
+      renderSidebar(filtered);
+      if (!filtered.some((d) => d.path === state.activeDoc)) {
+        loadDocument(filtered[0].path, false);
+        setStateFromUrl({ doc: filtered[0].path, tab: tabId }, true);
+      } else {
+        setStateFromUrl({ doc: state.activeDoc, tab: tabId });
+      }
+      docSelect.focus();
+    }
+
+    function applySearch(keyword) {
+      const filtered = filterDocs(keyword);
+      renderSelect(filtered);
+      renderSidebar(filtered);
+      if (filtered.length === 0) {
+        viewer.textContent = '검색 결과가 없습니다.';
+        setStatus('warn', '검색 결과 없음');
+      } else if (!DOCS.some((d) => d.path === state.activeDoc && filtered.includes(d))) {
+        const next = filtered[0];
+        loadDocument(next.path);
+        docSelect.value = next.path;
+        setStateFromUrl({ doc: next.path });
+      }
+      const target = state.activeDocText;
+      if (viewer.textContent && keyword) {
+        const safe = viewer.textContent;
+        const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        viewer.innerHTML = safe.replace(new RegExp(escaped, 'gi'), (match) => `<mark>${match}</mark>`);
+      }
+    }
+
+    // 이벤트 바인딩
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        applyTab(tab.dataset.target);
+      });
+      tab.addEventListener('keydown', (e) => {
+        const idx = [...tabs].indexOf(tab);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = tabs[(idx + 1) % tabs.length];
+          next.focus();
+          next.click();
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = tabs[(idx - 1 + tabs.length) % tabs.length];
+          prev.focus();
+          prev.click();
+        }
+        if (e.key === 'Home') {
+          tabs[0].focus(); tabs[0].click();
+        }
+        if (e.key === 'End') {
+          tabs[tabs.length - 1].focus(); tabs[tabs.length - 1].click();
         }
       });
     });
+
+    searchInput.addEventListener('input', (e) => {
+      applySearch(e.target.value);
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      applyTab(state.activeTab);
+    });
+
+    docSelect.addEventListener('change', () => {
+      loadDocument(docSelect.value);
+      syncUrl();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const txt = viewer.textContent || '';
+      try {
+        await navigator.clipboard.writeText(txt);
+        setStatus('success', '클립보드 복사 완료');
+        setTimeout(() => {
+          if (status.classList.contains('success')) setStatus('success', '준비됨');
+        }, 1400);
+      } catch (e) {
+        setStatus('error', '복사 실패: 브라우저 권한 필요');
+        retryBtn.style.display = 'inline-block';
+      }
+    });
+
+    retryBtn.addEventListener('click', () => {
+      if (state.activeDoc) {
+        loadDocument(state.activeDoc);
+      }
+    });
+
+    // 초기 URL 상태 복원
+    (function init() {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab') || 'core';
+      const doc = params.get('doc');
+
+      renderSelect(DOCS);
+      renderSidebar(DOCS);
+
+      if (tab && TAB_MAP[tab]) {
+        applyTab(tab);
+      }
+
+      if (doc && DOCS.some((d) => d.path === doc)) {
+        state.activeDoc = doc;
+        docSelect.value = doc;
+      }
+
+      loadDocument(state.activeDoc);
+      if (doc) syncUrl();
+    })();
   </script>
 </body>
 </html>
