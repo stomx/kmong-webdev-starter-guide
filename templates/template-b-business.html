@@ -3,50 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>기업 소개형 홈페이지 템플릿</title>
+  <meta name="description" content="기업형 소개 페이지 템플릿 B - 실무형 구성" />
+  <title>Template B - 기업 소개형</title>
   <link rel="stylesheet" href="./template-common.css" />
+  <style>
+    .about-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:16px; }
+    .timeline { border-left: 3px solid var(--accent); padding-left: 14px; }
+    .timeline li { margin: 12px 0; }
+    .profile-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      background: #f8fafc;
+      position: sticky;
+      top: 84px;
+      height: max-content;
+    }
+    .steps { list-style: none; padding:0; margin:0; }
+    .steps li { background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px; margin-bottom:8px; }
+    @media (max-width: 960px) {
+      .about-grid { grid-template-columns:1fr; }
+      .profile-card { position: static; }
+    }
+  </style>
 </head>
 <body>
   <header class="hero">
     <div class="section">
-      <span class="badge">Template B · Business</span>
-      <h1>신뢰를 설계하는 기업형 홈페이지</h1>
-      <p>브랜드 이야기, 서비스, 업무 프로세스, 문의를 한 번에 정리해 제안형으로 전환 가능한 구조입니다.</p>
-      <a class="btn" href="#contact">상세 상담 받기</a>
+      <span class="badge">Template B</span>
+      <h1>브랜드 신뢰를 쌓는 기업형 홈페이지 템플릿</h1>
+      <p>ABOUT · Services · Portfolio · Contact를 한 번에 보여주는 구조입니다.</p>
+      <a class="btn" href="#contact">상담 문의</a>
     </div>
   </header>
 
-  <section class="section">
-    <h2 class="section-title">회사 소개</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>ABOUT</h3>
-        <p>비즈니스의 핵심 가치를 한 장으로 전달합니다.</p>
-      </div>
-      <div class="card">
-        <h3>SERVICES</h3>
-        <p>기획·디자인·개발·운영을 분리하여 가독성 있게 구성합니다.</p>
-      </div>
-      <div class="card">
-        <h3>RESULTS</h3>
-        <p>기존 사례와 성과 포인트를 한눈에 확인할 수 있게 정렬합니다.</p>
-      </div>
-    </div>
-  </section>
+  <main>
+    <section class="section">
+      <h2 class="section-title">회사 소개</h2>
+      <div class="about-grid">
+        <div>
+          <div class="card">
+            <h3>브랜드 이야기</h3>
+            <p>문구 1개로 정체성을 압축하세요. "무엇을 위해 시작했고, 누구를 위해 존재하는지"를 한 문단으로 제시합니다.</p>
+          </div>
+          <div class="card" style="margin-top:12px;">
+            <h3>서비스</h3>
+            <ul class="timeline">
+              <li>컨설팅: 요구사항 구조화·기획 정리</li>
+              <li>제작: 반응형 퍼블리싱·컴포넌트 정비</li>
+              <li>런칭: 테스트·문서화·인수인계</li>
+            </ul>
+          </div>
+        </div>
 
-  <section class="section">
-    <h2 class="section-title">문의</h2>
-    <form id="contact">
-      <label for="email">이메일</label>
-      <input id="email" type="email" placeholder="name@company.com" />
-      <label for="need">요구사항</label>
-      <textarea id="need" rows="6" placeholder="페이지 수, 기능, 일정, 예산 범위를 입력하세요."></textarea>
-      <button class="btn" type="button">요청서 전송</button>
-    </form>
-  </section>
+        <aside class="profile-card">
+          <h3>신뢰 정보</h3>
+          <p><strong>작업 방식</strong><br/>범위·일정·수정 기준 선정의</p>
+          <p><strong>응답 속도</strong><br/>영업일 기준 빠른 피드백</p>
+          <p><strong>결제 방식</strong><br/>합의된 범위 기준 명확 정산</p>
+          <a class="btn" href="#portfolio">포트폴리오 보기</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="portfolio">
+      <h2 class="section-title">포트폴리오</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>프로젝트 A</h3>
+          <p>목표: 전환형 랜딩 정리<br/>성과: 방문자 행동 지점 정리</p>
+        </article>
+        <article class="card">
+          <h3>프로젝트 B</h3>
+          <p>목표: 회사 소개 체계 정리<br/>성과: 상담 단계 단축</p>
+        </article>
+        <article class="card">
+          <h3>프로젝트 C</h3>
+          <p>목표: 모바일 우선 구조 정비<br/>성과: 문의 흐름 일관성 확보</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">협업 프로세스</h2>
+      <div class="card">
+        <ol class="steps">
+          <li>1) 기획 인터뷰(요구사항 문서)</li>
+          <li>2) 와이어프레임/카피 정리</li>
+          <li>3) 1차 시안 반영(피드백 반영)</li>
+          <li>4) 최종 배포 + 유지보수 가이드</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2 class="section-title">연락</h2>
+      <form class="card" onsubmit="return false;">
+        <label for="company">회사명</label>
+        <input id="company" placeholder="OOO 주식회사" />
+        <label for="need-b">요청 내용</label>
+        <textarea id="need-b" rows="6" placeholder="브랜드 톤, 참고 링크, 일정, 예산 범위를 입력"></textarea>
+        <button type="button" class="btn">상담 요청</button>
+      </form>
+    </section>
+  </main>
 
   <footer>
-    <div class="section">© Template B | 기업 소개형</div>
+    <div class="section">© Template B · 기업 소개형 실사용 템플릿</div>
   </footer>
 </body>
 </html>

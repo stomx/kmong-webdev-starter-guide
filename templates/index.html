@@ -3,21 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>템플릿 목록</title>
+  <meta name="description" content="크몽 업로드용 실사용 템플릿 모음" />
+  <title>실사용 템플릿 목록</title>
   <style>
-    body { font-family: -apple-system, sans-serif; padding: 24px; background: #f8fafc; }
-    h1 { margin: 0 0 12px; }
-    .card{ background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; margin:12px 0; max-width: 720px; }
-    a{ display:block; color:#2563eb; text-decoration:none; margin:4px 0; }
+    :root {
+      --line: #e2e8f0;
+      --card: #ffffff;
+      --text: #0f172a;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Arial, sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      color: var(--text);
+    }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 32px; }
+    .title { margin: 0 0 12px; }
+    .summary {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+    a { color: #1d4ed8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .badge { background:#e0e7ff; color:#3730a3; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #bfdbfe; }
+    .row { display: grid; grid-template-columns:1fr; gap:8px; }
   </style>
 </head>
 <body>
-  <h1>크몽 웹개발 샘플 템플릿</h1>
-  <div class="card">
-    <a href="./template-a-landing.html">Template A - 반응형 랜딩</a>
-    <a href="./template-b-business.html">Template B - 기업 소개형</a>
-    <a href="./template-c-service-page.html">Template C - 서비스형</a>
-    <a href="./template-common.css">공통 CSS</a>
-  </div>
+  <main class="wrap">
+    <h1 class="title">크몽 업로드용 실사용 템플릿</h1>
+    <div class="summary">
+      아래 템플릿은 바로 크몽 상품 페이지에 연결 가능한 구조로 구성되어 있으며,
+      브랜딩 문구만 교체하면 그대로 사용 가능합니다.
+    </div>
+
+    <section class="card">
+      <span class="badge">Template A</span>
+      <h2>반응형 랜딩형</h2>
+      <p>문의 전환형 구조를 우선으로 한 랜딩 페이지 뼈대입니다.</p>
+      <a href="./template-a-landing.html">템플릿 A 보기</a>
+    </section>
+
+    <section class="card">
+      <span class="badge">Template B</span>
+      <h2>기업 소개형</h2>
+      <p>회사소개/서비스/포트폴리오를 한 번에 정리하는 실무형 페이지입니다.</p>
+      <a href="./template-b-business.html">템플릿 B 보기</a>
+    </section>
+
+    <section class="card">
+      <span class="badge">Template C</span>
+      <h2>서비스형 상세형</h2>
+      <p>기능/가격/FAQ를 한 화면에서 관리할 때 사용하기 좋은 구성입니다.</p>
+      <a href="./template-c-service-page.html">템플릿 C 보기</a>
+    </section>
+
+    <section class="card">
+      <h2>공통 스타일</h2>
+      <div class="row">
+        <a href="./template-common.css">template-common.css</a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
