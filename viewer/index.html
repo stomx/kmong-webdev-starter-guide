@@ -3,84 +3,271 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>크몽 웹개발 스타터 - 원격 뷰어</title>
+  <title>크몽 웹개발 스타터 원격 뷰어</title>
   <style>
-    :root { --bg: #0f172a; --card: #ffffff; --line: #e2e8f0; --text: #0f172a; }
-    *{box-sizing: border-box;}
-    body{margin:0; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Arial, sans-serif; background:#f8fafc; color:var(--text);}
-    .wrap{max-width: 980px; margin: 0 auto; padding: 24px 16px 40px;}
-    h1{font-size: 1.6rem; margin: 0 0 6px;}
-    .desc{color:#334155; margin-bottom: 18px;}
-    .grid{display:grid; grid-template-columns:1fr; gap:14px;}
-    @media (min-width: 820px){ .grid{grid-template-columns: 1fr 1fr;} }
-    .card{background:#fff; border:1px solid var(--line); border-radius: 12px; padding: 14px 16px;}
-    .card h2{margin: 0 0 8px; font-size: 1.05rem;}
-    a{color:#2563eb; text-decoration:none; word-break: break-all;}
-    ul{margin: 8px 0 0 18px; padding: 0;}
-    li{margin: 6px 0;}
-    code{background:#e2e8f0; padding:1px 6px; border-radius:6px;}
-    .banner{background:#eef2ff; border:1px solid #c7d2fe; padding:12px; border-radius:10px; margin-bottom: 18px;}
+    :root {
+      --bg: #0f172a;
+      --panel: #ffffff;
+      --line: #e2e8f0;
+      --muted: #334155;
+      --text: #0f172a;
+      --brand: #4f46e5;
+      --brand-2: #1d4ed8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f8fafc;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Arial, sans-serif;
+    }
+    .top {
+      background: linear-gradient(130deg, #0f172a, #1d4ed8);
+      color: #fff;
+      padding: 36px 16px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    h1 { margin: 0; font-size: clamp(1.6rem, 4vw, 2.2rem); }
+    .subtitle { margin: 8px 0 12px; color: #dbeafe; }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .tab {
+      background: rgba(255,255,255,.13);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 999px;
+      padding: 8px 12px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .tab.active { background: #fff; color: #0f172a; border-color: #fff; }
+
+    .section { padding: 18px 16px 30px; }
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 900px) {
+      .panel-grid { grid-template-columns: 1.2fr .8fr; }
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 6px 18px rgba(15,23,42,.05);
+    }
+    .card h2 { margin: 0 0 10px; font-size: 1.1rem; }
+    .card p { margin: 0 0 10px; color: var(--muted); }
+
+    .quick {
+      list-style: decimal;
+      margin: 0;
+      padding-left: 18px;
+      color: #334155;
+    }
+    .quick li { margin: 8px 0; }
+
+    .doc-list { margin: 0; padding-left: 18px; }
+    .doc-list a { color: #2563eb; }
+
+    .viewer {
+      margin-top: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0;
+      overflow: hidden;
+    }
+    .viewer-head {
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .viewer-head select {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.95rem;
+    }
+    .viewer pre {
+      margin: 0;
+      max-height: 560px;
+      overflow: auto;
+      padding: 14px;
+      line-height: 1.6;
+      background: #fff;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .pill {
+      background: #e0e7ff;
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    a {
+      text-decoration: none;
+      color: #2563eb;
+    }
+    a:hover { text-decoration: underline; }
+    .small { color: #64748b; font-size: 0.92rem; }
+
+    .call {
+      background: #ecfeff;
+      border: 1px solid #a5f3fc;
+      color: #0e7490;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>크몽 웹개발 스타터 - 원격 확인 뷰어</h1>
-    <div class="banner">
-      이 뷰어는 원격지에서 파일을 직접 찾아보기 어렵더라도, 브라우저에서 한 번에 정리본을 확인할 수 있게 만든 페이지입니다.
-      <br/>아래 파일 링크를 클릭해 열어 보세요.
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>핵심 실행 파일</h2>
-        <ul>
-          <li><a href="../docs/00_한눈에_보기_요약본.md">00_한눈에_보기_요약본.md</a></li>
-          <li><a href="../docs/06_크몽_최종_붙여넣기_패키지.md">06_크몽_최종_붙여넣기_패키지.md</a></li>
-          <li><a href="../docs/07_홍보_운영_완성본.md">07_홍보_운영_완성본.md</a></li>
-          <li><a href="../README.md">README.md</a></li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>템플릿 미리보기</h2>
-        <ul>
-          <li><a href="../templates/index.html">템플릿 index</a></li>
-          <li><a href="../templates/template-a-landing.html">template-a-landing.html</a></li>
-          <li><a href="../templates/template-b-business.html">template-b-business.html</a></li>
-          <li><a href="../templates/template-c-service-page.html">template-c-service-page.html</a></li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>체크리스트 / 폼</h2>
-        <ul>
-          <li><a href="../checklist/업로드_전_체크리스트.md">업로드_전_체크리스트.md</a></li>
-          <li><a href="../checklist/의뢰인_요구사항_폼.md">의뢰인_요구사항_폼.md</a></li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>보조 자료</h2>
-        <ul>
-          <li><a href="../sample_data/샘플_카피_문구.md">샘플_카피_문구.md</a></li>
-          <li><a href="../docs/01_전체_사업_설계.md">01_전체_사업_설계.md</a></li>
-          <li><a href="../docs/02_서비스_상품_설계.md">02_서비스_상품_설계.md</a></li>
-        </ul>
+  <header class="top">
+    <div class="wrap">
+      <h1>크몽 웹개발 스타터 원격 뷰어</h1>
+      <div class="subtitle">원격지에서도 바로 확인할 수 있는 전문형 배포판 뷰어</div>
+      <div class="tabs">
+        <a class="tab active" href="#" data-target="core">핵심 문안</a>
+        <a class="tab" href="#" data-target="ops">운영 체크</a>
+        <a class="tab" href="#" data-target="templates">템플릿</a>
+        <a class="tab" href="#" data-target="raw">원본 파일</a>
       </div>
     </div>
+  </header>
 
-    <div class="card" style="margin-top:14px;">
-      <h2>원격 접속용 실행 방법</h2>
-      <p>터미널에서 아래 명령 실행:</p>
-      <p><code>cd /Users/jaymon/.openclaw/workspace/Kmong-WebDev-Starter && python3 -m http.server 7860</code></p>
-      <p>다른 기기에서 접속:</p>
-      <p><code>http://&lt;이 PC의 IP&gt;:7860/viewer/</code></p>
-      <p>예시(같은 PC): <code>http://127.0.0.1:7860/viewer/</code></p>
+  <main class="section">
+    <div class="wrap panel-grid">
+      <section class="card" id="section-core">
+        <h2>프로젝트 개요</h2>
+        <p>문서 구조는 그대로 두되, 각 핵심 텍스트를 빠르게 확인·복붙할 수 있게 정리했습니다.</p>
+
+        <ul class="quick">
+          <li><strong>docs/06_크몽_최종_붙여넣기_패키지.md</strong> : 프로필/상품/FAQ/응답 템플릿</li>
+          <li><strong>docs/07_홍보_운영_완성본.md</strong> : 제목/썸네일/응답 운영안</li>
+          <li><strong>docs/05_크몽_즉시업로드_문안_세트.md</strong> : 초기 업로드용 베이스 텍스트</li>
+          <li><strong>checklist/업로드_전_체크리스트.md</strong> : 업로드 직전 점검</li>
+        </ul>
+
+        <div class="call" style="margin-top: 12px;">
+          포인트: 크몽 페이지는 텍스트 품질보다 <strong>명확한 포함/제외 항목</strong>과 <strong>첫 응답 속도</strong>가 전환률을 좌우합니다.
+        </div>
+      </section>
+
+      <section class="card" id="section-ops">
+        <h2>원격지 실행 가이드</h2>
+        <p>로컬에서 바로 확인하려면:</p>
+        <p class="small">cd /Users/jaymon/.openclaw/workspace/Kmong-WebDev-Starter && bash run_preview.sh</p>
+        <ul class="doc-list">
+          <li><a href="../run_preview.sh">run_preview.sh</a> (로컬 실행 스크립트)</li>
+          <li><a href="../docs/08_원격_확인_가이드.md">docs/08_원격_확인_가이드.md</a></li>
+          <li><a href="../templates/index.html">템플릿 인덱스</a></li>
+        </ul>
+
+        <h2 style="margin-top: 14px;">현재 뷰어 기능</h2>
+        <ul class="quick">
+          <li>선택한 파일 즉시 텍스트 로드</li>
+          <li>복사하기 버튼</li>
+          <li>모바일에서 터치 가능한 카드형 인터페이스</li>
+        </ul>
+      </section>
     </div>
 
-    <div class="desc">
-      비고: 브라우저에서 마크다운 확장자(.md)는 텍스트로 보이거나 렌더링되지 않을 수 있습니다. 필요하면 제가 바로 Markdown 렌더러 버전으로도 만들어드리겠습니다.
-    </div>
-  </div>
+    <section class="card viewer section-view" style="margin-top:14px;">
+      <div class="viewer-head">
+        <div>
+          <span class="pill">문서 미리보기</span>
+          <span class="small" id="currentPath" style="margin-left:8px;"></span>
+        </div>
+        <select id="docSelect" aria-label="문서 선택">
+          <option value="../docs/06_크몽_최종_붙여넣기_패키지.md">06_크몽_최종_붙여넣기_패키지</option>
+          <option value="../docs/07_홍보_운영_완성본.md">07_홍보_운영_완성본</option>
+          <option value="../docs/05_크몽_즉시업로드_문안_세트.md">05_크몽_즉시업로드_문안_세트</option>
+          <option value="../docs/00_한눈에_보기_요약본.md">00_한눈에_보기_요약본</option>
+          <option value="../checklist/업로드_전_체크리스트.md">업로드_전_체크리스트</option>
+          <option value="../checklist/의뢰인_요구사항_폼.md">의뢰인_요구사항_폼</option>
+        </select>
+      </div>
+      <pre id="docViewer">문서를 로드 중입니다...</pre>
+    </section>
+
+    <section class="card" style="margin-top: 14px;" id="section-templates">
+      <h2>템플릿 빠른 링크</h2>
+      <div class="small">브라우저에서 각 템플릿을 열고, 로고/색/카피를 교체해 사용하세요.</div>
+      <ul class="doc-list" style="margin-top:12px;">
+        <li><a href="../templates/template-a-landing.html">template-a-landing (랜딩)</a></li>
+        <li><a href="../templates/template-b-business.html">template-b-business (기업소개)</a></li>
+        <li><a href="../templates/template-c-service-page.html">template-c-service-page (서비스형)</a></li>
+        <li><a href="../templates/template-common.css">template-common.css</a></li>
+      </ul>
+    </section>
+
+    <section class="call" style="margin-top: 14px;">
+      필요하면 이 뷰어에 <strong>실제 마크다운 렌더링</strong> 모드까지 붙여, 제목/목록을 폰트 스타일로 보여주도록 다음 단계에서 확장 가능합니다.
+    </section>
+  </main>
+
+  <script>
+    const viewer = document.getElementById('docViewer');
+    const select = document.getElementById('docSelect');
+    const currentPath = document.getElementById('currentPath');
+
+    async function loadDoc(path) {
+      try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error('로드 실패');
+        const txt = await res.text();
+        viewer.textContent = txt;
+        currentPath.textContent = path;
+      } catch (e) {
+        viewer.textContent = '문서 로드 실패: ' + e.message + '\n경로: ' + path;
+      }
+    }
+
+    select.addEventListener('change', (e) => {
+      loadDoc(e.target.value);
+    });
+
+    // 초기 로드
+    loadDoc(select.value);
+
+    // 네비게이션 탭 동작
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.target;
+        const map = {
+          core: ['06_크몽_최종_붙여넣기_패키지.md', '07_홍보_운영_완성본.md'],
+          ops: ['업로드_전_체크리스트.md', 'docs/00_한눈에_보기_요약본.md'],
+          templates: ['template-a-landing.html', 'template-b-business.html', 'template-c-service-page.html']
+        };
+        const options = Array.from(select.options);
+        const next = map[target] ? options.find(opt => map[target].some(k => opt.value.includes(k))) : options[0];
+        if (next) {
+          select.value = next.value;
+          loadDoc(next.value);
+          document.getElementById('section-core').scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+  </script>
 </body>
 </html>

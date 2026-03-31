@@ -3,14 +3,200 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="0; url=./viewer/" />
-  <title>크몽 웹개발 스타터</title>
+  <title>크몽 웹개발 전문가 출범팩 | Professional Starter</title>
+  <meta name="description" content="웹개발 크몽 전문가 등록용 즉시 사용 가능한 문안·템플릿·체크리스트 패키지" />
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Arial, sans-serif; padding: 32px; }
-    a { color: #2563eb; }
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --line: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --brand: #4f46e5;
+      --brand-deep: #4338ca;
+      --accent: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Arial, sans-serif; color: var(--text); background: var(--bg); }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+    .hero {
+      background: radial-gradient(1000px 500px at 85% 5%, #93c5fd 0%, transparent 35%), linear-gradient(125deg, #0f172a, #1d4ed8);
+      color: #ffffff;
+      padding: 54px 0 36px;
+    }
+    .hero h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.25; }
+    .hero p { margin: 0; color: #dbeafe; max-width: 860px; }
+
+    .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: 0.15s;
+      background: #fff;
+      color: #0f172a;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(255,255,255,.4);
+      color: #fff;
+    }
+
+    main { padding: 28px 0 40px; }
+    .title {
+      font-size: 1.2rem;
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(15,23,42,.05);
+    }
+    .card h2 { margin: 0 0 8px; font-size: 1.05rem; }
+    .card p { margin: 0 0 12px; color: var(--muted); }
+    .chip-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .chip { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 999px; padding: 4px 10px; font-size: 0.8rem; color: #1d4ed8; font-weight: 700; }
+
+    .card a { color: #2563eb; text-decoration: none; }
+    .card a:hover { text-decoration: underline; }
+    .card ul { margin: 10px 0 0; padding-left: 18px; }
+
+    .notice {
+      background: #ecfeff;
+      border: 1px solid #a5f3fc;
+      border-radius: 12px;
+      padding: 12px;
+      color: #155e75;
+      margin: 12px 0 20px;
+    }
+
+    .steps { list-style: none; padding: 0; margin: 0; }
+    .steps li {
+      padding: 12px;
+      border-left: 3px solid var(--brand);
+      background: #fff;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .steps strong { color: #0f172a; }
+    .steps span { color: var(--muted); font-size: 0.95rem; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      padding: 14px 0;
+      color: #64748b;
+      text-align: center;
+      font-size: .95rem;
+    }
   </style>
 </head>
 <body>
-  <p>로딩 중입니다. <a href="./viewer/">크몽 웹개발 스타터 바로가기</a></p>
+  <header class="hero">
+    <div class="wrap">
+      <div class="chip-wrap">
+        <span class="chip">전문가급 정리본</span>
+        <span class="chip">크몽 업로드용</span>
+      </div>
+      <h1>크몽 웹개발 전문가 출범 킷</h1>
+      <p>
+        지금 상태의 기본 텍스트 링크형 뷰어를 개선해, 원격지에서도 한 번에 핵심 자료를 확인할 수 있는 <strong>전문가용 뷰어</strong>로 업그레이드했습니다.
+        아래의 문안/템플릿/체크리스트를 바로 복사해서 사용하세요.
+      </p>
+      <div class="row">
+        <a class="btn" href="./viewer/">🚀 원격 뷰어 열기</a>
+        <a class="btn btn-outline" href="./viewer/index.html?view=quick" aria-label="빠른 시작 안내">📌 빠른 시작</a>
+        <a class="btn btn-outline" href="./templates/" aria-label="템플릿 보러가기">🎨 템플릿 미리보기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <h2 class="title">✨ 주요 구성물</h2>
+      <div class="grid">
+        <section class="card" id="docs">
+          <h2>1) 바로 업로드용 문구</h2>
+          <p>프로필, 상품 3개, FAQ, 고객 응답 메시지까지 복붙 가능한 문안.</p>
+          <div class="chip-wrap">
+            <span class="chip">프로필</span>
+            <span class="chip">상품 가격/범위</span>
+            <span class="chip">FAQ</span>
+          </div>
+          <ul>
+            <li><a href="./docs/06_크몽_최종_붙여넣기_패키지.md">docs/06_크몽_최종_붙여넣기_패키지.md</a></li>
+            <li><a href="./docs/05_크몽_즉시업로드_문안_세트.md">docs/05_크몽_즉시업로드_문안_세트.md</a></li>
+            <li><a href="./docs/07_홍보_운영_완성본.md">docs/07_홍보_운영_완성본.md</a></li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>2) 실행 체크리스트</h2>
+          <p>업로드 전 실수 방지용 핵심 점검표.</p>
+          <div class="chip-wrap">
+            <span class="chip">오차 줄이기</span>
+            <span class="chip">누락 제거</span>
+          </div>
+          <ul>
+            <li><a href="./checklist/업로드_전_체크리스트.md">업로드_전_체크리스트.md</a></li>
+            <li><a href="./checklist/의뢰인_요구사항_폼.md">의뢰인_요구사항_폼.md</a></li>
+            <li><a href="./docs/08_원격_확인_가이드.md">원격 확인 가이드</a></li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>3) 샘플 페이지</h2>
+          <p>랜딩/기업형/서비스형 템플릿 3종 + 공통 CSS.</p>
+          <div class="chip-wrap">
+            <span class="chip">반응형</span>
+            <span class="chip">즉시 편집</span>
+          </div>
+          <ul>
+            <li><a href="./templates/index.html">템플릿 인덱스</a></li>
+            <li><a href="./templates/template-a-landing.html">템플릿 A</a> / <a href="./templates/template-b-business.html">템플릿 B</a> / <a href="./templates/template-c-service-page.html">템플릿 C</a></li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="notice">
+        페이지 품질 개선 포인트: 기존 텍스트 위주의 미완성 뷰에서 벗어나, 항목별 카드형 구성과 실행 경로, 긴급 체크 포인트를 한 화면에 넣어 모바일에서도 즉시 판단 가능하게 정리했습니다.
+      </div>
+
+      <h2 class="title">🧭 빠른 시작 순서</h2>
+      <ol class="steps">
+        <li><strong>docs/06_최종 문안</strong> <span>→ 크몽 상품 소개/FAQ에 그대로 붙여넣기</span></li>
+        <li><strong>템플릿 3종</strong> <span>→ 10분 내 로고·문구 교체 후 썸네일 캡처</span></li>
+        <li><strong>체크리스트 확인</strong> <span>→ 포함/제외 항목 누락 없이 업로드</span></li>
+        <li><strong>응대 메시지</strong> <span>→ 첫 문의 대응 템플릿 3개로 통일</span></li>
+        <li><strong>24시간 추적</strong> <span>→ 응답속도/문의 반응 로그로 다음 조정</span></li>
+      </ol>
+    </div>
+  </main>
+
+  <footer>© Kmong Web Dev Starter · Local build by professional mode</footer>
 </body>
 </html>
